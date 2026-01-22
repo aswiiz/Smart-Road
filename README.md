@@ -29,3 +29,10 @@ Features:
 4.  Implement "Authority Dashboard".
 5.  Implement "Tracking".
 6.  Final Polish.
+## Secured Dashboard:
+Attempting to visit /dashboard without being logged in will now redirect you to the Login page.
+Login Page: A new login page (/login) has been created.
+Username: admin
+Password: admin123
+Logout: Added a logout button to the dashboard.
+Try it out:
