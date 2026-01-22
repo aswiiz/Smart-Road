@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Authority Dashboard - Smart Road</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <h1>👮 Authority Dashboard</h1>
+
+    <div class="box" style="width: 90%;">
+        <h2>All Reports</h2>
+
+        {% if reports %}
+        <table class="report-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Date</th>
+                    <th>Location</th>
+                    <th>Details</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for report in reports %}
+                <tr>
+                    <td>{{ report.id }}</td>
+                    <td>{{ report.time }}</td>
+                    <td>
+                        {{ report.location }}<br>
+                        <small>{{ report.panchayath }}, {{ report.district }}</small>
+                    </td>
+                    <td>
+                        <b>{{ report.name }}</b><br>
+                        {{ report.desc }}
+                    </td>
+                    <td>
+                        <span class="status-{{ report.status.lower().replace(' ', '-') }}">{{ report.status }}</span>
+                    </td>
+                    <td>
+                        <form action="{{ url_for('update_status', report_id=report.id) }}" method="POST"
+                            style="margin:0;">
+                            <select name="status" onchange="this.form.submit()">
+                                <option value="Pending" {% if report.status=='Pending' %}selected{% endif %}>Pending
+                                </option>
+                                <option value="In Progress" {% if report.status=='In Progress' %}selected{% endif %}>In
+                                    Progress</option>
+                                <option value="Completed" {% if report.status=='Completed' %}selected{% endif %}>
+                                    Completed</option>
+                            </select>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No reports found.</p>
+        {% endif %}
+
+        <div style="margin-top: 20px;">
+            <a href="{{ url_for('home') }}" style="color: #38bdf8; text-decoration: none; margin-right: 20px;">&larr;
+                Back to Home</a>
+            <a href="{{ url_for('logout') }}" style="color: #ef4444; text-decoration: none;">Logout &rarr;</a>
+        </div>
+    </div>
+
+</body>
+
+</html>
